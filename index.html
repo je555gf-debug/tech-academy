@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tech Academy MassMail</title>
+  <title>Tech Academy</title>
 
   <style>
     :root {
@@ -17,6 +17,53 @@
       font-family: Arial, Helvetica, sans-serif;
       background: var(--beige);
       color: var(--dark-green);
+      display: flex;
+    }
+
+    /* SIDEBAR MENU */
+    .sidebar {
+      width: 70px;
+      background: var(--dark-green);
+      color: var(--beige);
+      transition: width 0.3s ease;
+      overflow: hidden;
+    }
+
+    .sidebar.open {
+      width: 220px;
+    }
+
+    .menu-toggle {
+      background: none;
+      border: none;
+      color: var(--beige);
+      padding: 1.2rem;
+      font-size: 1.1rem;
+      cursor: pointer;
+      width: 100%;
+      text-align: left;
+    }
+
+    .menu-items button {
+      display: block;
+      width: 100%;
+      background: none;
+      border: none;
+      color: var(--beige);
+      padding: 0.9rem 1.2rem;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .menu-items button:hover,
+    .menu-items button.active {
+      background: var(--olive);
+    }
+
+    /* MAIN CONTENT */
+    .content {
+      flex: 1;
+      padding: 2rem;
     }
 
     header {
@@ -24,6 +71,7 @@
       color: var(--beige);
       padding: 3rem 2rem;
       text-align: center;
+      border-radius: 12px;
     }
 
     header h1 {
@@ -35,65 +83,40 @@
       max-width: 1000px;
       margin: auto;
       line-height: 1.7;
-      font-size: 1.05rem;
     }
 
-    nav {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 1rem;
-      background: var(--olive);
-      padding: 1rem;
+    .lang-toggle {
+      margin-top: 1.5rem;
     }
 
-    nav button {
+    .lang-toggle button {
       background: var(--beige);
       border: none;
-      color: var(--dark-green);
-      padding: 0.6rem 1.2rem;
-      border-radius: 6px;
+      padding: 0.4rem 1rem;
       cursor: pointer;
+      border-radius: 6px;
       font-weight: bold;
     }
 
-    nav button.active {
-      background: var(--dark-green);
-      color: var(--beige);
-    }
-
-    main {
-      max-width: 1100px;
-      margin: auto;
-      padding: 3rem 2rem;
-    }
-
-    section {
-      display: none;
-    }
-
-    section.active {
-      display: block;
-    }
+    section { display: none; margin-top: 3rem; }
+    section.active { display: block; }
 
     .hero-images {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 1.5rem;
-      margin: 2.5rem 0;
+      margin-top: 2.5rem;
     }
 
-    .hero-images img {
-      width: 100%;
-      border-radius: 12px;
-    }
+    .hero-images img { width: 100%; border-radius: 12px; }
 
+    /* CONTACT FORM */
     .contact-card {
       background: #ffffff;
       padding: 2rem;
       border-radius: 12px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
       max-width: 700px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
     }
 
     .contact-card label {
@@ -109,57 +132,66 @@
       margin-top: 0.4rem;
       border-radius: 6px;
       border: 1px solid #ccc;
-      font-size: 1rem;
     }
 
-    .contact-card textarea {
-      min-height: 140px;
+    .contact-card textarea { min-height: 140px; }
+
+    .contact-card button {
+      margin-top: 1.5rem;
+      background: var(--olive);
+      color: var(--beige);
+      border: none;
+      padding: 0.7rem 1.5rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
     }
 
     footer {
+      margin-top: 4rem;
+      padding: 2rem;
+      text-align: center;
       background: var(--dark-green);
       color: var(--beige);
-      text-align: center;
-      padding: 2rem;
-      margin-top: 4rem;
-      font-size: 0.9rem;
+      border-radius: 12px;
     }
+
+    footer a { color: var(--beige); text-decoration: underline; }
   </style>
 </head>
-
 <body>
+
+<div class="sidebar" id="sidebar">
+  <button class="menu-toggle" onclick="toggleMenu()">☰ Menu</button>
+  <div class="menu-items">
+    <button class="active" onclick="showSection('home', this)">Home</button>
+    <button onclick="showSection('reading', this)">Reading</button>
+    <button onclick="showSection('grammar', this)">Grammar</button>
+    <button onclick="showSection('vocabulary', this)">Vocabulary</button>
+    <button onclick="showSection('essay', this)">Essay</button>
+    <button onclick="showSection('videos', this)">Videos</button>
+    <button onclick="showSection('resources', this)">Resources</button>
+    <button onclick="showSection('contacts', this)">Contactos</button>
+    <button onclick="showSection('more', this)">More Info</button>
+  </div>
+</div>
+
+<div class="content">
 
 <header>
   <h1>Tech Academy</h1>
-  <p>
-    Today, a big part of the world’s population is bilingual or multilingual rather than just monolingual. In a survey conducted by the European Commission in 2006, 56% of respondents reported being able to speak a language other than their mother tongue.
-    <br /><br />
-    In addition to facilitating cross-cultural communication, bilingualism positively affects cognitive abilities. Research shows improved attention, task-switching capacity, faster stroke recovery, and delayed onset of dementia in multilingual individuals.
+  <p id="intro">
+    Today, a big part of the world’s population is bilingual or multilingual rather than just monolingual. Research shows cognitive, social and neurological advantages linked to multilingualism.
   </p>
+  <div class="lang-toggle">
+    <button onclick="toggleLanguage()">EN / ES</button>
+  </div>
 </header>
 
-<nav>
-  <button class="active" onclick="showSection('home', this)">Home</button>
-  <button onclick="showSection('reading', this)">Reading</button>
-  <button onclick="showSection('grammar', this)">Grammar</button>
-  <button onclick="showSection('vocabulary', this)">Vocabulary</button>
-  <button onclick="showSection('essay', this)">Essay</button>
-  <button onclick="showSection('videos', this)">Videos</button>
-  <button onclick="showSection('contacts', this)">Contactos</button>
-  <button onclick="showSection('more', this)">More Info</button>
-</nav>
-
-<main>
-
 <section id="home" class="active">
-  <h2>Welcome to Tech Academy</h2>
-  <p>
-    Tech Academy is a self-paced learning environment designed for non-native English speakers. Our approach combines independent study, cognitive science, and real-world academic content to promote deep, meaningful language acquisition.
-  </p>
-
   <div class="hero-images">
-    <img src="IMG_7920.jpg" alt="Academic laboratory experience" />
-    <img src="IMG_0028.jpg" alt="Learning in nature and exploration" />
+    <img src="IMG_7920.jpg" />
+    <img src="IMG_0028.jpg" />
   </div>
 </section>
 
@@ -168,39 +200,58 @@
 <section id="vocabulary"><h2>Vocabulary</h2><p>Content coming soon.</p></section>
 <section id="essay"><h2>Essay</h2><p>Content coming soon.</p></section>
 <section id="videos"><h2>Videos</h2><p>Content coming soon.</p></section>
-<section id="more"><h2>More Information</h2><p>Content coming soon.</p></section>
+<section id="resources"><h2>Resources</h2><p>Academic and learning resources will be available here.</p></section>
+<section id="more"><h2>More Information</h2><p>Additional information coming soon.</p></section>
 
 <section id="contacts">
   <h2>Contactos</h2>
-  <p>
-    This space allows students and collaborators to communicate directly with Tech Academy. Please provide clear information so your message can be properly received and addressed.
-  </p>
-
   <div class="contact-card">
-    <label>REMITENTE (Your Email)</label>
-    <input type="email" placeholder="correo@ejemplo.com" />
+    <form action="mailto:techacademy.support@gmail.com" method="post" enctype="text/plain">
+      <label>REMITENTE (Your Email)</label>
+      <input type="email" name="email" required />
 
-    <label>MENSAJE</label>
-    <textarea placeholder="Escribe tu mensaje aquí..."></textarea>
+      <label>MENSAJE</label>
+      <textarea name="message" required></textarea>
 
-    <label>DESTINATARIOS / CONTACTOS</label>
-    <input type="text" placeholder="Departamento, tutor, o área académica" />
+      <label>DESTINATARIOS / CONTACTOS</label>
+      <input type="text" name="recipient" />
+
+      <button type="submit">Enviar mensaje</button>
+    </form>
   </div>
 </section>
 
-</main>
-
 <footer>
-  © 2026 Tech Academy · Multilingual Education Platform
+  © 2026 Tech Academy · Multilingual Education Platform<br />
+  <a href="https://www.linkedin.com/in/jehu-martinez-893920209" target="_blank">LinkedIn · Jehu Martínez</a>
 </footer>
 
+</div>
+
 <script>
+  let lang = 'en';
+
+  function toggleMenu() {
+    document.getElementById('sidebar').classList.toggle('open');
+  }
+
   function showSection(id, btn) {
     document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
     document.getElementById(id).classList.add('active');
 
-    document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.menu-items button').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
+  }
+
+  function toggleLanguage() {
+    const intro = document.getElementById('intro');
+    if (lang === 'en') {
+      intro.innerText = 'Hoy, gran parte de la población mundial es bilingüe o multilingüe. El multilingüismo aporta beneficios cognitivos, sociales y neurológicos comprobados.';
+      lang = 'es';
+    } else {
+      intro.innerText = 'Today, a big part of the world’s population is bilingual or multilingual rather than just monolingual. Research shows cognitive, social and neurological advantages linked to multilingualism.';
+      lang = 'en';
+    }
   }
 </script>
 
