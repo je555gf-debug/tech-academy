@@ -29,9 +29,7 @@
       overflow: hidden;
     }
 
-    .sidebar.open {
-      width: 220px;
-    }
+    .sidebar.open { width: 220px; }
 
     .menu-toggle {
       background: none;
@@ -56,15 +54,10 @@
     }
 
     .menu-items button:hover,
-    .menu-items button.active {
-      background: var(--olive);
-    }
+    .menu-items button.active { background: var(--olive); }
 
     /* MAIN CONTENT */
-    .content {
-      flex: 1;
-      padding: 2rem;
-    }
+    .content { flex: 1; padding: 2rem; }
 
     header {
       background: linear-gradient(135deg, var(--dark-green), var(--olive));
@@ -74,20 +67,11 @@
       border-radius: 12px;
     }
 
-    header h1 {
-      font-size: 3rem;
-      margin-bottom: 1rem;
-    }
+    header h1 { font-size: 3rem; margin-bottom: 1rem; }
 
-    header p {
-      max-width: 1000px;
-      margin: auto;
-      line-height: 1.7;
-    }
+    header p { max-width: 1000px; margin: auto; line-height: 1.7; }
 
-    .lang-toggle {
-      margin-top: 1.5rem;
-    }
+    .lang-toggle { margin-top: 1.5rem; }
 
     .lang-toggle button {
       background: var(--beige);
@@ -119,11 +103,7 @@
       box-shadow: 0 10px 25px rgba(0,0,0,0.15);
     }
 
-    .contact-card label {
-      display: block;
-      margin-top: 1.2rem;
-      font-weight: bold;
-    }
+    .contact-card label { display: block; margin-top: 1.2rem; font-weight: bold; }
 
     .contact-card input,
     .contact-card textarea {
@@ -144,6 +124,16 @@
       padding: 0.7rem 1.5rem;
       border-radius: 6px;
       cursor: pointer;
+      font-weight: bold;
+    }
+
+    .success-message {
+      background: #e7f3d7;
+      border: 1px solid var(--olive);
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1.5rem;
+      display: none;
       font-weight: bold;
     }
 
@@ -180,9 +170,7 @@
 
 <header>
   <h1>Tech Academy</h1>
-  <p id="intro">
-    Today, a big part of the world’s population is bilingual or multilingual rather than just monolingual. Research shows cognitive, social and neurological advantages linked to multilingualism.
-  </p>
+  <p id="intro">Today, a big part of the world’s population is bilingual or multilingual rather than just monolingual. Research shows cognitive, social and neurological advantages linked to multilingualism.</p>
   <div class="lang-toggle">
     <button onclick="toggleLanguage()">EN / ES</button>
   </div>
@@ -206,31 +194,29 @@
 <section id="contacts">
   <h2>Contactos</h2>
   <div class="contact-card">
+    <div class="success-message" id="successMsg">✅ Gracias, tu mensaje fue enviado correctamente. Te responderemos pronto.</div>
+
     <form 
-  name="contactos"
-  method="POST"
-  data-netlify="true"
-  netlify-honeypot="bot-field"
->
-  <!-- Campo oculto obligatorio para Netlify -->
-  <input type="hidden" name="form-name" value="contactos" />
+      name="contactos"
+      method="POST"
+      data-netlify="true"
+      netlify-honeypot="bot-field"
+      action="/?sent=true"
+    >
+      <input type="hidden" name="form-name" value="contactos" />
+      <p style="display:none;"><label>Don’t fill this out: <input name="bot-field" /></label></p>
 
-  <!-- Anti-spam -->
-  <p style="display:none;">
-    <label>Don’t fill this out: <input name="bot-field" /></label>
-  </p>
+      <label>REMITENTE (Your Email)</label>
+      <input type="email" name="email" required />
 
-  <label>REMITENTE (Your Email)</label>
-  <input type="email" name="email" required />
+      <label>MENSAJE</label>
+      <textarea name="message" required></textarea>
 
-  <label>MENSAJE</label>
-  <textarea name="message" required></textarea>
+      <label>DESTINATARIOS / CONTACTOS</label>
+      <input type="text" name="recipient" />
 
-  <label>DESTINATARIOS / CONTACTOS</label>
-  <input type="text" name="recipient" />
-
-  <button type="submit">Enviar mensaje</button>
-</form>
+      <button type="submit">Enviar mensaje</button>
+    </form>
   </div>
 </section>
 
@@ -251,7 +237,6 @@
   function showSection(id, btn) {
     document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
     document.getElementById(id).classList.add('active');
-
     document.querySelectorAll('.menu-items button').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
   }
@@ -265,6 +250,13 @@
       intro.innerText = 'Today, a big part of the world’s population is bilingual or multilingual rather than just monolingual. Research shows cognitive, social and neurological advantages linked to multilingualism.';
       lang = 'en';
     }
+  }
+
+  // Mostrar mensaje de confirmación
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('sent') === 'true') {
+    showSection('contacts', document.querySelector("button[onclick*=contacts]"));
+    document.getElementById('successMsg').style.display = 'block';
   }
 </script>
 
