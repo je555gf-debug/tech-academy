@@ -7,257 +7,170 @@
 
   <style>
     :root {
-      --olive: #556b2f;
-      --dark-green: #2f3e1f;
-      --beige: #f5f0e6;
+      --deep-blue: #0a2540;
+      --light-gray: #f2f4f7;
+      --mid-gray: #d0d5dd;
     }
 
     body {
       margin: 0;
       font-family: Arial, Helvetica, sans-serif;
-      background: var(--beige);
-      color: var(--dark-green);
-      display: flex;
+      background: var(--light-gray);
+      color: var(--deep-blue);
     }
-
-    /* SIDEBAR MENU */
-    .sidebar {
-      width: 70px;
-      background: var(--dark-green);
-      color: var(--beige);
-      transition: width 0.3s ease;
-      overflow: hidden;
-    }
-
-    .sidebar.open { width: 220px; }
-
-    .menu-toggle {
-      background: none;
-      border: none;
-      color: var(--beige);
-      padding: 1.2rem;
-      font-size: 1.1rem;
-      cursor: pointer;
-      width: 100%;
-      text-align: left;
-    }
-
-    .menu-items button {
-      display: block;
-      width: 100%;
-      background: none;
-      border: none;
-      color: var(--beige);
-      padding: 0.9rem 1.2rem;
-      text-align: left;
-      cursor: pointer;
-    }
-
-    .menu-items button:hover,
-    .menu-items button.active { background: var(--olive); }
-
-    /* MAIN CONTENT */
-    .content { flex: 1; padding: 2rem; }
 
     header {
-      background: linear-gradient(135deg, var(--dark-green), var(--olive));
-      color: var(--beige);
+      background: linear-gradient(135deg, #0a2540, #163b66);
+      color: white;
       padding: 3rem 2rem;
       text-align: center;
-      border-radius: 12px;
     }
 
-    header h1 { font-size: 3rem; margin-bottom: 1rem; }
-
-    header p { max-width: 1000px; margin: auto; line-height: 1.7; }
-
-    .lang-toggle { margin-top: 1.5rem; }
-
-    .lang-toggle button {
-      background: var(--beige);
-      border: none;
-      padding: 0.4rem 1rem;
-      cursor: pointer;
-      border-radius: 6px;
-      font-weight: bold;
+    header h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
     }
 
-    section { display: none; margin-top: 3rem; }
-    section.active { display: block; }
-
-    .hero-images {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.5rem;
-      margin-top: 2.5rem;
+    header p {
+      max-width: 1000px;
+      margin: auto;
+      line-height: 1.7;
     }
 
-    .hero-images img { width: 100%; border-radius: 12px; }
+    main {
+      padding: 3rem 2rem;
+      max-width: 1100px;
+      margin: auto;
+    }
 
-    /* CONTACT FORM */
-    .contact-card {
-      background: #ffffff;
+    section {
+      margin-bottom: 4rem;
+    }
+
+    section h2 {
+      border-left: 6px solid var(--deep-blue);
+      padding-left: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .about-card {
+      background: white;
       padding: 2rem;
       border-radius: 12px;
-      max-width: 700px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      line-height: 1.7;
     }
 
-    .contact-card label { display: block; margin-top: 1.2rem; font-weight: bold; }
-
-    .contact-card input,
-    .contact-card textarea {
-      width: 100%;
-      padding: 0.7rem;
-      margin-top: 0.4rem;
-      border-radius: 6px;
-      border: 1px solid #ccc;
+    .about-card ul {
+      padding-left: 1.2rem;
     }
 
-    .contact-card textarea { min-height: 140px; }
+    .about-card li {
+      margin-bottom: 1rem;
+    }
 
-    .contact-card button {
-      margin-top: 1.5rem;
-      background: var(--olive);
-      color: var(--beige);
+    /* BOTTOM MENU */
+    .bottom-menu {
+      position: sticky;
+      bottom: 0;
+      background: var(--deep-blue);
+      display: flex;
+      justify-content: space-around;
+      padding: 0.8rem 0;
+    }
+
+    .bottom-menu button {
+      background: none;
       border: none;
-      padding: 0.7rem 1.5rem;
-      border-radius: 6px;
-      cursor: pointer;
+      color: white;
       font-weight: bold;
+      cursor: pointer;
     }
 
-    .success-message {
-      background: #e7f3d7;
-      border: 1px solid var(--olive);
-      padding: 1rem;
-      border-radius: 8px;
-      margin-bottom: 1.5rem;
-      display: none;
-      font-weight: bold;
+    .bottom-menu button.active {
+      text-decoration: underline;
     }
 
     footer {
-      margin-top: 4rem;
-      padding: 2rem;
+      background: #0a2540;
+      color: white;
       text-align: center;
-      background: var(--dark-green);
-      color: var(--beige);
-      border-radius: 12px;
+      padding: 2rem;
     }
 
-    footer a { color: var(--beige); text-decoration: underline; }
+    footer a {
+      color: #ffffff;
+      text-decoration: underline;
+    }
   </style>
 </head>
 <body>
 
-<div class="sidebar" id="sidebar">
-  <button class="menu-toggle" onclick="toggleMenu()">☰ Menu</button>
-  <div class="menu-items">
-    <button class="active" onclick="showSection('home', this)">Home</button>
-    <button onclick="showSection('reading', this)">Reading</button>
-    <button onclick="showSection('grammar', this)">Grammar</button>
-    <button onclick="showSection('vocabulary', this)">Vocabulary</button>
-    <button onclick="showSection('essay', this)">Essay</button>
-    <button onclick="showSection('videos', this)">Videos</button>
-    <button onclick="showSection('resources', this)">Resources</button>
-    <button onclick="showSection('contacts', this)">Contactos</button>
-    <button onclick="showSection('more', this)">More Info</button>
-  </div>
-</div>
-
-<div class="content">
-
 <header>
   <h1>Tech Academy</h1>
-  <p id="intro">Today, a big part of the world’s population is bilingual or multilingual rather than just monolingual. Research shows cognitive, social and neurological advantages linked to multilingualism.</p>
-  <div class="lang-toggle">
-    <button onclick="toggleLanguage()">EN / ES</button>
-  </div>
+  <p>
+    Today, a big part of the world’s population is bilingual or multilingual rather than just monolingual. Research highlights strong cognitive, social, and academic advantages associated with learning and using more than one language.
+  </p>
 </header>
 
-<section id="home" class="active">
-  <div class="hero-images">
-    <img src="IMG_7920.jpg" />
-    <img src="IMG_0028.jpg" />
-  </div>
-</section>
+<main>
 
-<section id="reading"><h2>Reading</h2><p>Content coming soon.</p></section>
-<section id="grammar"><h2>Grammar</h2><p>Content coming soon.</p></section>
-<section id="vocabulary"><h2>Vocabulary</h2><p>Content coming soon.</p></section>
-<section id="essay"><h2>Essay</h2><p>Content coming soon.</p></section>
-<section id="videos"><h2>Videos</h2><p>Content coming soon.</p></section>
-<section id="resources"><h2>Resources</h2><p>Academic and learning resources will be available here.</p></section>
-<section id="more"><h2>More Information</h2><p>Additional information coming soon.</p></section>
+  <section id="home" class="active">
+    <h2>Welcome</h2>
+    <p>
+      Tech Academy is designed to support self-paced learning through clear explanations, academic rigor, and structured content that connects language, science, and critical thinking.
+    </p>
+  </section>
 
-<section id="contacts">
-  <h2>Contactos</h2>
-  <div class="contact-card">
-    <div class="success-message" id="successMsg">✅ Gracias, tu mensaje fue enviado correctamente. Te responderemos pronto.</div>
+  <section id="about">
+    <h2>About Us</h2>
+    <div class="about-card">
+      <ul>
+        <li><strong>Accurate explanation of sexual and asexual reproduction:</strong><br>
+        Students clearly explain the processes of sexual and asexual reproduction, identify key differences between them, and describe how each type of reproduction affects genetic variation and offspring characteristics.</li>
 
-    <form 
-      name="contactos"
-      method="POST"
-      data-netlify="true"
-      netlify-honeypot="bot-field"
-      action="/?sent=true"
-    >
-      <input type="hidden" name="form-name" value="contactos" />
-      <p style="display:none;"><label>Don’t fill this out: <input name="bot-field" /></label></p>
+        <li><strong>Correct use of genetics and reproduction vocabulary:</strong><br>
+        Students consistently and accurately use key vocabulary terms (reproduction, heredity, gene, allele, chromosome, dominant, recessive, genotype, phenotype) in written and oral explanations, demonstrating clear understanding of meaning and context.</li>
 
-      <label>REMITENTE (Your Email)</label>
-      <input type="email" name="email" required />
+        <li><strong>Accurate construction and interpretation of Punnett squares:</strong><br>
+        Students correctly construct Punnett squares for simple genetic crosses, determine possible genotypes and phenotypes, and interpret probability outcomes using appropriate scientific reasoning.</li>
 
-      <label>MENSAJE</label>
-      <textarea name="message" required></textarea>
+        <li><strong>Clear explanation of genotype–phenotype relationships:</strong><br>
+        Students explain how genotypes determine phenotypes, describe the role of dominant and recessive alleles, and use examples to show how different genetic combinations result in observable traits.</li>
 
-      <label>DESTINATARIOS / CONTACTOS</label>
-      <input type="text" name="recipient" />
+        <li><strong>Logical connection between reproduction, genetics, and variation using evidence:</strong><br>
+        Students explain how reproductive processes influence genetic variation within populations, supporting explanations with models, examples, or data rather than personal opinions.</li>
+      </ul>
+    </div>
+  </section>
 
-      <button type="submit">Enviar mensaje</button>
-    </form>
-  </div>
-</section>
+</main>
+
+<div class="bottom-menu">
+  <button class="active" onclick="showSection('home', this)">Home</button>
+  <button onclick="showSection('about', this)">About Us</button>
+  <button onclick="showSection('reading', this)">Reading</button>
+  <button onclick="showSection('grammar', this)">Grammar</button>
+  <button onclick="showSection('vocabulary', this)">Vocabulary</button>
+</div>
 
 <footer>
-  © 2026 Tech Academy · Multilingual Education Platform<br />
+  © 2026 Tech Academy · Academic Learning Platform<br />
   <a href="https://www.linkedin.com/in/jehu-martinez-893920209" target="_blank">LinkedIn · Jehu Martínez</a>
 </footer>
 
-</div>
-
 <script>
-  let lang = 'en';
-
-  function toggleMenu() {
-    document.getElementById('sidebar').classList.toggle('open');
-  }
-
   function showSection(id, btn) {
-    document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
-    document.getElementById(id).classList.add('active');
-    document.querySelectorAll('.menu-items button').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('main section').forEach(s => s.style.display = 'none');
+    document.getElementById(id).style.display = 'block';
+
+    document.querySelectorAll('.bottom-menu button').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
   }
 
-  function toggleLanguage() {
-    const intro = document.getElementById('intro');
-    if (lang === 'en') {
-      intro.innerText = 'Hoy, gran parte de la población mundial es bilingüe o multilingüe. El multilingüismo aporta beneficios cognitivos, sociales y neurológicos comprobados.';
-      lang = 'es';
-    } else {
-      intro.innerText = 'Today, a big part of the world’s population is bilingual or multilingual rather than just monolingual. Research shows cognitive, social and neurological advantages linked to multilingualism.';
-      lang = 'en';
-    }
-  }
-
-  // Mostrar mensaje de confirmación
-  const params = new URLSearchParams(window.location.search);
-  if (params.get('sent') === 'true') {
-    showSection('contacts', document.querySelector("button[onclick*=contacts]"));
-    document.getElementById('successMsg').style.display = 'block';
-  }
+  // Mostrar solo home al inicio
+  document.querySelectorAll('main section').forEach(s => s.style.display = 'none');
+  document.getElementById('home').style.display = 'block';
 </script>
 
 </body>
